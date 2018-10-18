@@ -46,14 +46,50 @@
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
 	<h1>Quality: About This Data Set</h1>
-        <p>Write a brief summary about the quality of the data set here</a></p>
+        <p>The dataset has a lot of redundancy. After dropping duplicates, the data is enough for
+        studying the relationship between my locations and the time periods in a day. Although the collected 
+        records are not balanced across a day, they are enough for the question we are going to answer. 
+        After visualizing the dataset, we ensure that the dataset is complete, coherent and correct
+        for the question.</p>
       </div>
 
-    
       <div class="page-header">
 	<h2>Is the data complete?</h2>
 	<p>If not, what is missing and what concerns does it raise?
 	What is your evidence for this?</p>
+	
+	<div class="text-info">
+	<p>Yes, the data is complete for the question we are going to answer.</p>
+	
+	<p>The original dataset has a lot of redundancy, i.e., some records are reported multiple times from the client.
+	Before assessing the data completeness, we first do the data cleaning by dropping duplicate records. </p>
+	
+	<p>We drop duplicates in the table <code>locations</code> by comparing columns <code>timestamp</code> and 
+	<code>provider</code>. Before dropping duplicates, there are 60638 records in the table. After dropping duplicates,
+	there are 9184 records in the table.</p>
+	
+	<p>We drop duplicates in the table <code>plugin_ios_activity_recognition</code> by comparing column <code>timestamp</code>.
+	In addition, some records do not non-null <code>activities</code> field, so we also drop these records.
+	There are 24914 records before cleaning, and 14882 records after cleaning.</p>
+	
+	<p>After the data cleaning, we plot the number of records versus the time in one day, to assess whether the data is complete 
+	to study my location pattern in one day. The histogram of location records across the minutes in a whole day is shown below.</p>
+	
+	<img src="img/loc_daytime_dist.png" alt="Locations in a whole day" width="50%"/>
+	
+	<p>As shown in the figure, the numbers of records across a day are not balanced. However, since we merely want to analyze the 
+	relationship between my locations and the time, a dataset that covers a whole day is enough. The histogram of activity records
+	across the minutes in a whole day is shown below.</p>
+	
+	<img src="img/activity_daytime_dist.png" alt="Activities in a whole day" width="50%"/>
+	
+	<p>Similarly, the numbers of records across a day are not balanced. But because they cover the whole day, this data is enough 
+	to study the relationship between my locations and the time.</p>
+	
+	<p>To sum up, the data is complete to study the relationship between my locations and the time. We assess and ensure 
+	the data completeness by visualizing the histograms of records across the time in a day.</p>
+	
+	</div>
       </div>
       
       <div class="page-header">
@@ -61,12 +97,250 @@
 	<p>Does it make sense relative to itself? Does it match your
 	expectations? Are the distributions sensible? What is your
 	evidence for this?</p>
+	
+	<div class="text-info">
+	<p>Yes, the data is coherent after removing some outliers.</p>
+	
+	<p>By generating the summary statistics of the two tables we will use in the analysis, <code>locations</code> and 
+	<code>plugin_ios_activity_recognition</code>, we find 40 records in <code>locations</code> table with 
+	<code>double_latitude</code> or <code>double_longitude</code> equal to 0.0, which are outside the United States. 
+	After we removing these records, we have 9144 records in <code>locations</code> table, and its summary statistics are 
+	shown below.</p>
+	
+	<table class="table">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>_id</th>
+      <th>double_latitude</th>
+      <th>double_longitude</th>
+      <th>double_bearing</th>
+      <th>double_speed</th>
+      <th>double_altitude</th>
+      <th>accuracy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>9144.000000</td>
+      <td>9144.000000</td>
+      <td>9144.000000</td>
+      <td>9144.000000</td>
+      <td>9144.00000</td>
+      <td>9144.000000</td>
+      <td>9144.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>24521.186899</td>
+      <td>40.447075</td>
+      <td>-79.935650</td>
+      <td>-0.038155</td>
+      <td>-0.94667</td>
+      <td>286.794984</td>
+      <td>38.329943</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>17711.411326</td>
+      <td>0.004440</td>
+      <td>0.010914</td>
+      <td>14.087900</td>
+      <td>0.79639</td>
+      <td>6.825490</td>
+      <td>25.555877</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>1.000000</td>
+      <td>40.437805</td>
+      <td>-79.953009</td>
+      <td>-1.000000</td>
+      <td>-1.00000</td>
+      <td>275.230927</td>
+      <td>6.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>7019.750000</td>
+      <td>40.443573</td>
+      <td>-79.944516</td>
+      <td>-1.000000</td>
+      <td>-1.00000</td>
+      <td>281.731010</td>
+      <td>37.000000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>22581.500000</td>
+      <td>40.443939</td>
+      <td>-79.944215</td>
+      <td>-1.000000</td>
+      <td>-1.00000</td>
+      <td>286.184570</td>
+      <td>37.000000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>34351.250000</td>
+      <td>40.452759</td>
+      <td>-79.921492</td>
+      <td>-1.000000</td>
+      <td>-1.00000</td>
+      <td>291.698303</td>
+      <td>37.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>60638.000000</td>
+      <td>40.455692</td>
+      <td>-79.919407</td>
+      <td>355.078125</td>
+      <td>15.80000</td>
+      <td>348.518764</td>
+      <td>722.000000</td>
+    </tr>
+  </tbody>
+</table>
+	
+	<p>As shown in the above table, we find that all values are reasonable. Similarly, we generate the summary statistics of 
+	<code>plugin_ios_activity_recognition</code> table.</p>
+	
+	<table class="table">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>_id</th>
+      <th>confidence</th>
+      <th>stationary</th>
+      <th>walking</th>
+      <th>running</th>
+      <th>automotive</th>
+      <th>cycling</th>
+      <th>unknown</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>14882.000000</td>
+      <td>14882.00000</td>
+      <td>14882.000000</td>
+      <td>14882.000000</td>
+      <td>14882.000000</td>
+      <td>14882.000000</td>
+      <td>14882.000000</td>
+      <td>14882.0</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>12426.723424</td>
+      <td>1.93724</td>
+      <td>0.763876</td>
+      <td>0.173633</td>
+      <td>0.002621</td>
+      <td>0.016530</td>
+      <td>0.048515</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>7236.634952</td>
+      <td>0.24254</td>
+      <td>0.424714</td>
+      <td>0.378806</td>
+      <td>0.051127</td>
+      <td>0.127506</td>
+      <td>0.214859</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>5.000000</td>
+      <td>1.00000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>6200.250000</td>
+      <td>2.00000</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>12418.500000</td>
+      <td>2.00000</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>18662.500000</td>
+      <td>2.00000</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>24914.000000</td>
+      <td>2.00000</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+	
+	<p>All values in <code>plugin_ios_activity_recognition</code> table are reasonable.</p>
+	
+	<p>To sum up, we assess the data coherence by checking the summary statistics and the content. After removing 40 outliers,
+	we ensure the data coherence of this dataset.</p>
+	
+	</div>
       </div>
 
       <div class="page-header">
 	<h2>Is the data correct?</h2>
 	<p>What aspects of this data can you verify? How did you do so? What did
 	you find?</p>
+	
+	<div class="text-info">
+	<p>Yes, the data is correct.</p>
+	
+	<p>We use <code>double_latitude</code> and <code>double_longitude</code> fields in <code>locations</code> table to generate a map.
+	The map is shown below.</p>
+	
+	<div class='tableauPlaceholder' id='viz1539830357901' style='position: relative'><noscript><a href='#'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;By&#47;Byte-4&#47;Locations&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz' width='840' height='560' style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='Byte-4&#47;Locations' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;By&#47;Byte-4&#47;Locations&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1539830357901');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.minWidth='420px';vizElement.style.maxWidth='100%';vizElement.style.minHeight='587px';vizElement.style.maxHeight=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+	
+	<p>As shown in the map, all location points are places that I've been. Hence, we think that the data is correct.</p>
+	
+	<p>To sum up, we assess the data correctness by generating a map of location data, and ensure the correctness by visually checking
+	whether I've been those places in the past two weeks.</p>
+	
+	</div>
+	
       </div>
 
     </div> <!-- /container -->

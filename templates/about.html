@@ -47,20 +47,31 @@
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
 	<h1>Accountability: About This Data Set</h1>
-        <p>Write a brief summary about the data set here</a></p>
+        <p>This mobile dataset contains my location statistics in past two weeks. They are collected using the
+        AWARE framework with App installed on my iOS device. The whole dataset contains mobile data of locations,
+        visited locations, and activity recognition. We download the dataset from Google Cloud SQL, by using <code>SELECT</code>
+        statements with time conversion functions <code>FROM_UNIXTIME(timestamp/1000, '%Y-%m-%d %H:%i:%s')</code> before the 
+        data cleaning.</p>
       </div>
 
     
       <div class="page-header">
 	<h2>Where did this data come from?</h2>
-	<p>fill in</p>
+	<p>These data are collected using my own mobile device, and collected through the AWARE framework with storage at 
+	Google Cloud SQL. The dataset used in the analysis is downloaded from the Google Cloud SQL by exporting the results of 
+	<code>SELECT</code> statements to csv files on Oct 17, 2018. We use two tables <code>locations</code>
+	and <code>plugin_ios_activity_recognition</code> in the analysis.</p>
       </div>
       
       <div class="page-header">
 	<h2>Who has access to it?</h2>
-	<p>fill in</p>
+	<p>The original data source in the SQL database can only be accessed by myself. However, the exported csv files, i.e.,
+	the data used in the analysis are freely available at 
+	<a href="https://console.cloud.google.com/storage/browser/mobile-byte3-jiaand">
+		https://console.cloud.google.com/storage/browser/mobile-byte3-jiaand
+	</a>.
+	</p>
       </div>
-
 
     </div> <!-- /container -->
 
